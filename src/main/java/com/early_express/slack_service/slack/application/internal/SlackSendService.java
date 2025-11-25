@@ -30,48 +30,6 @@ public class SlackSendService {
     private final MessageSend  messageSend;
     private final TaskScheduler taskScheduler;
 
-    private final int SCHEDULE_HOUR = 18;
-    private final int SCHEDULE_MINUTE = 0;
-
-
-
-//    public SendResponse sendDeliveryMessage(SendRequest sendRequest) throws Exception {
-//        if(sendRequest.getReceiverId() == null || sendRequest.getReceiverId().isEmpty()){
-//
-//            throw new SlackException(MISSING_PARAMETER);
-//        }
-//
-//
-//
-//        boolean call_result = callSlack(sendRequest);
-//        SlackStatus status = call_result ? SlackStatus.SENT : SlackStatus.FAILED;
-//        String errorMessage = call_result ? null : SLACK_SEND_FAILED.getMessage();
-//        LocalDateTime sentAt = call_result ?LocalDateTime.now(): null ;
-//
-//
-//        Slack slack = Slack.builder()
-//                .slackId(SlackId.of())
-//                .receiverSlackId(sendRequest.getReceiverId())
-//                .message(sendRequest.getMessage())
-//                .status(status)
-//                .type(MessageType.MORNING_DELIVERY)
-//                .sentAt(sentAt)
-//                .errorMessage(errorMessage)
-//                .build();
-//        try{
-//            slackRepository.save(slack);
-//        }catch(Exception e){
-//            throw new SlackException(SLACK_DB_SAVE_FAILED);
-//        }
-//
-//        return new SendResponse(
-//                slack.getSlackId().getId(),
-//                slack.getReceiverSlackId(),
-//                slack.getStatus(),
-//                slack.getSentAt(),
-//                slack.getErrorMessage()
-//        );
-//    }
 
     public void sendDeliveryMessage(SendRequest sendRequest) throws Exception {
         if (sendRequest.getReceiverId() == null || sendRequest.getReceiverId().isEmpty()) {
