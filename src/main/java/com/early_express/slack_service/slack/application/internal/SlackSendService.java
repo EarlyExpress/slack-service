@@ -11,6 +11,7 @@ import com.early_express.slack_service.slack.infrastructure.client.dto.request.S
 import com.early_express.slack_service.slack.infrastructure.client.dto.response.SendResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.TaskScheduler;
 
 import org.springframework.scheduling.support.CronTrigger;
@@ -48,6 +49,7 @@ public class SlackSendService {
                 .slackId(SlackId.of())
                 .receiverSlackId(sendRequest.getReceiverId())
                 .message(sendRequest.getMessage())
+                .type(sendRequest.getMessageType())
                 .status(status)
                 .type(MessageType.MORNING_DELIVERY)
                 .sentAt(sentAt)
@@ -75,6 +77,7 @@ public class SlackSendService {
     }
 
     // 스케줄링
+    @CacheEvict(value = "slack", allEntries = true)
     public SendResponse schedule_delivery(SendRequest sendRequest) throws Exception{
 
 
@@ -90,17 +93,15 @@ public class SlackSendService {
                 }
             }
         };
-        taskScheduler.schedule(schedule_delivery, new CronTrigger("0 50 17 * * *"));
+        taskScheduler.schedule(schedule_delivery, new CronTrigger("0 39 11 * * *"));
 
 
 
 
         return new SendResponse(
 
-                SlackId.of().getId(), sendRequest.getReceiverId(),sendRequest.getSlackStatus(),LocalDateTime.now(),"");
+                SlackId.of().getId(), sendRequest.getReceiverId(),sendRequest.getMessage(),sendRequest.getMessageType(),sendRequest.getSlackStatus(),LocalDateTime.now(),"");
     }
-
-
 
 
 

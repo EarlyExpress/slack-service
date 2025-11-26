@@ -1,4 +1,4 @@
-package com.early_express.slack_service.slack.infrastructure.config;
+package com.early_express.slack_service.slack.infrastructure.config.schedule;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
