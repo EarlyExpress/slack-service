@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Table(name = "slack")
@@ -19,8 +18,10 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Slack extends BaseEntity {
 
-    @EmbeddedId
-    private SlackId slackId;
+    @Id
+    @Column(columnDefinition = "BINARY(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID slackId;
 
     @Column(nullable=false)
     private String receiverSlackId;
@@ -41,24 +42,4 @@ public class Slack extends BaseEntity {
     private String errorMessage;
 
 
-
-//    @Builder
-//    public Slack(UUID slackId, String receiverSlackId, String message, SlackStatus status, MessageType type, String errorMessage, LocalDateTime sendAt, MessageSend messageSend) {
-//        this.slackId = slackId;
-//        if( receiverSlackId == null || receiverSlackId.isEmpty() ) this.receiverSlackId = UUID.randomUUID().toString();
-//        this.message = message;
-//        this.sendAt = sendAt;
-//        this.status = status;
-//        this.type = type;
-//        this.errorMessage = errorMessage;
-//        this.sendAt = LocalDateTime.now();
-//        setMessage(messageSend);
-//    }
-//
-//    private void setMessage(MessageSend messageSend) {
-//        if (messageSend == null) return;
-//        List<String> ids = List.of(this.receiverSlackId);
-//        String message = this.message;
-//        boolean result = messageSend.send(ids,message);
-//    }
 }
