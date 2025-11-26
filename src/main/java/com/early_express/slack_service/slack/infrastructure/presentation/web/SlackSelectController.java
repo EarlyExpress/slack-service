@@ -10,10 +10,9 @@ import com.early_express.slack_service.slack.infrastructure.client.dto.response.
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/slack/web")
@@ -22,24 +21,20 @@ public class SlackSelectController {
 
     private final SlackSelectService slackSelectService;
 
-    @GetMapping("/selectAll")
+    @GetMapping("/select")
     public PageResponse<SendResponse> selectAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "LATEST") String sortType
     ) {
-//        Page<SendResponse> slackPage = slackSelectService.getSelectAll(page, size, sortType);
-//
-//
-//        return PageUtils.toPageResponse(slackPage);
         return slackSelectService.getSelectAll(page, size, sortType);
     }
 
-//    public ResponseEntity<Page<SendResponse>> selectAll(
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "10") int size,
-//            @RequestParam(defaultValue = "LATEST") String sortType){
-//        Page<SendResponse> response = slackSelectService.getSelectAll(page,size,sortType);
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping("/select/{id}")
+    public ResponseEntity<SendResponse> select(@PathVariable UUID id) {
+        SendResponse response = slackSelectService.getOneSlack(id);
+        return ResponseEntity.ok(response);
+
+    }
+
 }

@@ -27,7 +27,7 @@ public class SlackRepositoryImpl implements SlackRepositoryCustom {
 
         JPAQuery<SendResponse> query = queryFactory
                 .select(Projections.constructor(SendResponse.class,
-                        slack.slackId.id,
+                        slack.slackId,
                         slack.receiverSlackId,
                         slack.message,
                         slack.type,

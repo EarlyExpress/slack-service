@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Table(name = "slack")
@@ -19,8 +18,11 @@ import java.util.UUID;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Slack extends BaseEntity {
 
-    @EmbeddedId
-    private SlackId slackId;
+    @Id
+    @Column(columnDefinition = "BINARY(16)")
+    @GeneratedValue(strategy = GenerationType.UUID)
+//    private SlackId slackId;
+    private UUID slackId;
 
     @Column(nullable=false)
     private String receiverSlackId;

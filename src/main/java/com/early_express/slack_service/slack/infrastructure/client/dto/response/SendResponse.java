@@ -2,29 +2,35 @@ package com.early_express.slack_service.slack.infrastructure.client.dto.response
 
 
 import com.early_express.slack_service.slack.domain.entity.MessageType;
+import com.early_express.slack_service.slack.domain.entity.Slack;
 import com.early_express.slack_service.slack.domain.entity.SlackStatus;
-import com.early_express.slack_service.slack.infrastructure.client.dto.request.SendRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class SendResponse  {
-    private UUID slackId;
-    private String receiverSlackId;
-    private String message;
-    private MessageType messageType;
-    private SlackStatus status;
-    private LocalDateTime sentAt;
-    private String errorMessage;
-
-
+public record SendResponse (
+        UUID slackId,
+        String receiverSlackId,
+        String message,
+        MessageType messageType,
+        SlackStatus status,
+        LocalDateTime sentAt,
+        String errorMessage
+) {
+    public static SendResponse of(Slack slack) {
+        return SendResponse.builder()
+                .slackId(slack.getSlackId())
+                .receiverSlackId(slack.getReceiverSlackId())
+                .message(slack.getMessage())
+                .messageType(slack.getType())
+                .status(slack.getStatus())
+                .sentAt(slack.getSentAt())
+                .errorMessage(slack.getErrorMessage())
+                .build();
+    }
 }
