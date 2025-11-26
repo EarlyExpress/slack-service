@@ -14,7 +14,6 @@ import java.util.UUID;
 @Repository
 public interface SlackRepository extends JpaRepository<Slack, UUID>, SlackRepositoryCustom {
 
-    //Page<SendResponse> slackList(Pageable pageable);
     Page<SendResponse> slackList(int page, int size,String sortType);
 }
 

@@ -4,7 +4,6 @@ import com.early_express.slack_service.slack.application.exception.SlackExceptio
 import com.early_express.slack_service.slack.domain.MessageSend;
 import com.early_express.slack_service.slack.domain.entity.MessageType;
 import com.early_express.slack_service.slack.domain.entity.Slack;
-import com.early_express.slack_service.slack.domain.entity.SlackId;
 import com.early_express.slack_service.slack.domain.entity.SlackStatus;
 import com.early_express.slack_service.slack.domain.repository.SlackRepository;
 import com.early_express.slack_service.slack.infrastructure.client.dto.request.SendRequest;
@@ -69,11 +68,11 @@ public class SlackSendService {
     @CacheEvict(value = "slack", allEntries = true)
     public void scheduleDelivery() {
         try {
-            List<String> receivers = List.of("U09V1GT3BH8"); // 테스트용 더미 데이터
+            List<String> receivers = List.of("U09V1GT3BH8");
             for (String receiver : receivers) {
                 SendRequest request = SendRequest.builder()
                         .receiverId(receiver)
-                        .message("오늘 배송할 주소: 서울시 강남구 ...") // 테스트용 메시지
+                        .message("오늘 배송할 주소: 서울시 강남구 ...")
                         .messageType(MessageType.MORNING_DELIVERY)
                         .build();
                 sendDeliveryMessage(request);

@@ -21,7 +21,6 @@ public class Slack extends BaseEntity {
     @Id
     @Column(columnDefinition = "BINARY(16)")
     @GeneratedValue(strategy = GenerationType.UUID)
-//    private SlackId slackId;
     private UUID slackId;
 
     @Column(nullable=false)
