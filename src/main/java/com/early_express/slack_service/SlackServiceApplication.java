@@ -1,4 +1,4 @@
-package com.earlyexpress.slack_service;
+package com.early_express.slack_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
