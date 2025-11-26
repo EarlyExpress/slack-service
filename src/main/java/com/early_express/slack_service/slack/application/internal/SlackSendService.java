@@ -1,6 +1,5 @@
 package com.early_express.slack_service.slack.application.internal;
 
-import com.early_express.slack_service.slack.application.event.NotificationRequestedEvent;
 import com.early_express.slack_service.slack.application.exception.SlackException;
 import com.early_express.slack_service.slack.domain.MessageSend;
 import com.early_express.slack_service.slack.domain.entity.MessageType;
@@ -58,53 +57,11 @@ public class SlackSendService {
         }
     }
 
-//    public NotificationRequestedEvent sendHubMessage(NotificationRequestedEvent notificationRequestedEvent) throws Exception {
-//        if (notificationRequestedEvent.getReceiverPhone() == null || notificationRequestedEvent.getReceiverPhone().isEmpty()) {
-//            throw new SlackException(MISSING_PARAMETER);
-//        }
-//
-//        boolean callResult = callHubSlack(notificationRequestedEvent);
-//        SlackStatus status = callResult ? SlackStatus.SENT : SlackStatus.FAILED;
-//        String errorMessage = callResult ? null : SLACK_SEND_FAILED.getMessage();
-//        LocalDateTime sentAt = callResult ? LocalDateTime.now() : null;
-//
-//        Slack slack = Slack.builder()
-//                .orderId(notificationRequestedEvent.getOrderId())
-//                .receiverSlackId(notificationRequestedEvent.getReceiverPhone())
-//                .message(notificationRequestedEvent.getDeliveryAddress())
-//                .type(MessageType.valueOf(notificationRequestedEvent.getNotificationType()))
-//                .status(status)
-//                .type(MessageType.HUB_ORDER)
-//                .notification(notificationRequestedEvent.getNotificationType())
-//                .sentAt(sentAt)
-//                .errorMessage(errorMessage)
-//                .build();
-//
-//        try {
-//            slackRepository.save(slack);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            throw new SlackException(SLACK_DB_SAVE_FAILED);
-//        }
-//        return notificationRequestedEvent;
-//    }
-
-
-
     public boolean callSlack(SendRequest sendRequest) throws Exception {
         if (messageSend == null) return false;
         List<String> id = List.of(sendRequest.getReceiverId());
         return messageSend.send(id, sendRequest.getMessage());
     }
-
-
-    public boolean callHubSlack(NotificationRequestedEvent notificationRequestedEvent) throws Exception {
-        if (messageSend == null) return false;
-        List<String> id = List.of(notificationRequestedEvent.getReceiverPhone());
-        return messageSend.send(id, notificationRequestedEvent.getDeliveryAddress());
-    }
-
-
 
     @Scheduled(cron = "0 1 14 * * *")
     //@SchedulerLock(name = "sendDeliveryMessageLock")
@@ -125,37 +82,4 @@ public class SlackSendService {
             e.printStackTrace();
         }
     }
-
-    public NotificationRequestedEvent sendHubMessage(NotificationRequestedEvent notificationRequestedEvent) throws Exception {
-        if (notificationRequestedEvent.getReceiverPhone() == null || notificationRequestedEvent.getReceiverPhone().isEmpty()) {
-            throw new SlackException(MISSING_PARAMETER);
-        }
-
-        // 실제 Slack 호출은 하지 않고 항상 성공 처리
-        boolean callResult = callHubSlack(notificationRequestedEvent);
-        SlackStatus status = callResult ? SlackStatus.SENT : SlackStatus.FAILED;
-        String errorMessage = callResult ? null : SLACK_SEND_FAILED.getMessage();
-        LocalDateTime sentAt = callResult ? LocalDateTime.now() : null;
-
-        Slack slack = Slack.builder()
-                .orderId(notificationRequestedEvent.getOrderId())
-                .receiverSlackId(notificationRequestedEvent.getReceiverPhone())
-                .message(notificationRequestedEvent.getDeliveryAddress())
-                .type(MessageType.HUB_ORDER)
-                .status(status)
-                .notification(notificationRequestedEvent.getNotificationType())
-                .sentAt(sentAt)
-                .errorMessage(errorMessage)
-                .build();
-
-        try {
-            slackRepository.save(slack);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new SlackException(SLACK_DB_SAVE_FAILED);
-        }
-
-        return notificationRequestedEvent;
-    }
-
 }

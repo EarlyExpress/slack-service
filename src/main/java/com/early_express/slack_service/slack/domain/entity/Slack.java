@@ -23,8 +23,6 @@ public class Slack extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID slackId;
 
-    private String orderId;
-
     @Column(nullable=false)
     private String receiverSlackId;
 
@@ -38,8 +36,6 @@ public class Slack extends BaseEntity {
     @Column(nullable=false)
     @Enumerated(EnumType.STRING)
     private MessageType type;
-
-    private String notification;
 
     private LocalDateTime sentAt;
 
