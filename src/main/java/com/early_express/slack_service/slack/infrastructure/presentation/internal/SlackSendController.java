@@ -18,13 +18,19 @@ public class SlackSendController {
 
     private final SlackSendService slackSendService;
 
-    @PostMapping("/delivery-sent")
-    public ResponseEntity<SendResponse> sendDeliveryMessage(@RequestBody SendRequest sendRequest) throws Exception {
+//    @PostMapping("/delivery-sent")
+//    public void sendDeliveryMessage(@RequestBody SendRequest sendRequest) throws Exception {
+//
+//        SendResponse response =slackSendService.schedule_delivery(sendRequest);
+//        return ResponseEntity.ok(response);
+//
+//    }
 
-        SendResponse response =slackSendService.schedule_delivery(sendRequest);
-        return ResponseEntity.ok(response);
-
-    }
+    // ai를 통해 정보 받기 (외부호출)
+//    @PostMapping("/test")
+//    public void sendTest(@RequestBody SendRequest request) {
+//        slackSendService.sendDeliveryMessage(request);
+//    }
 
 
 }
