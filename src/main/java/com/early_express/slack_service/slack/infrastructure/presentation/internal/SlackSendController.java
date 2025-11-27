@@ -1,6 +1,7 @@
 package com.early_express.slack_service.slack.infrastructure.presentation.internal;
 
 
+import com.early_express.slack_service.slack.application.event.NotificationRequestedEvent;
 import com.early_express.slack_service.slack.application.internal.SlackSendService;
 import com.early_express.slack_service.slack.infrastructure.client.dto.request.SendRequest;
 import com.early_express.slack_service.slack.infrastructure.client.dto.response.SendResponse;
@@ -18,13 +19,13 @@ public class SlackSendController {
 
     private final SlackSendService slackSendService;
 
-//    @PostMapping("/delivery-sent")
-//    public void sendDeliveryMessage(@RequestBody SendRequest sendRequest) throws Exception {
-//
-//        SendResponse response =slackSendService.schedule_delivery(sendRequest);
-//        return ResponseEntity.ok(response);
-//
-//    }
+    @PostMapping("/hub-sent")
+    public ResponseEntity<NotificationRequestedEvent> sendOrderMessage(@RequestBody NotificationRequestedEvent notificationRequestedEvent) throws Exception {
+
+        NotificationRequestedEvent event =slackSendService.sendHubMessage(notificationRequestedEvent);
+        return ResponseEntity.ok(event);
+
+    }
 
     // ai를 통해 정보 받기 (외부호출)
 //    @PostMapping("/test")
