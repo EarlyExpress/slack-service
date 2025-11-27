@@ -46,4 +46,11 @@ public class Slack extends BaseEntity {
     private String errorMessage;
 
 
+    public void updateStatus(SlackStatus slackStatus) {
+        this.status = slackStatus;
+    }
+
+    public void updateErrorMessage(String message) {
+        this.errorMessage = message;
+    }
 }

@@ -2,7 +2,6 @@
 # 마이크로서비스 개별 설정
 # Config Server의 공통 설정을 상속받고 서비스별 고유 설정만 정의
 # ========================================
-
 spring:
   # ===== 서비스 식별 정보 =====
   application:
@@ -40,9 +39,8 @@ spring:
   kafka:
     # Kafka 브로커 클러스터 주소
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092,localhost:9093,localhost:9094}
-    topic:
-      notification-requested-event: notification-requested-event
-
+  topic:
+    notification-requested-event: notification-requested-event
     # ----- Producer(생산자) 설정 -----
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer  # 키 직렬화
@@ -52,6 +50,7 @@ spring:
       properties:
         enable.idempotence: true  # 멱등성 보장 (중복 방지)
         max.in.flight.requests.per.connection: 5  # 동시 전송 가능한 요청 수
+        spring.json.add.type.headers: true
 
     # ----- Consumer(소비자) 설정 -----
     consumer:

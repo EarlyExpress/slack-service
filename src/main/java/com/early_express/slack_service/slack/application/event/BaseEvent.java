@@ -1,6 +1,5 @@
 package com.early_express.slack_service.slack.application.event;
 
-import lombok.Generated;
 import lombok.Getter;
 
 @Getter
