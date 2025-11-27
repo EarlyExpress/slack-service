@@ -39,8 +39,6 @@ spring:
   kafka:
     # Kafka 브로커 클러스터 주소
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092,localhost:9093,localhost:9094}
-    topic:
-      notification-requested-event: notification-requested-event
 
     # ----- Producer(생산자) 설정 -----
     producer:
